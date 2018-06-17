@@ -1,0 +1,52 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generaciÃ³n: 17-06-2018 a las 16:27:18
+-- VersiÃ³n del servidor: 10.1.21-MariaDB
+-- VersiÃ³n de PHP: 7.0.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `visortestbd`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto_ins`
+--
+
+CREATE TABLE `producto_ins` (
+  `usuario` varchar(45) NOT NULL,
+  `clave` varchar(45) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `categoria` varchar(45) NOT NULL,
+  `precio` varchar(10) NOT NULL,
+  `valorEsperado` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `producto_ins`
+--
+
+INSERT INTO `producto_ins` (`usuario`, `clave`, `nombre`, `categoria`, `precio`, `valorEsperado`) VALUES
+('admin', 'clave', 'DEBE SALIR GALLETAS', 'GASEOSAS', '7.7', 'Se guardÃ³ de manera correcta el Producto'),
+('admin', 'clave', 'DEBE SALIR GALLETAS', 'GASEOSAS', '7.7', 'Se guardÃ³ de manera correcta el Producto'),
+('admin', 'clave', 'DEBE SALIR GALLETAS', 'GASEOSAS', '6.6', 'Se guardÃ³ de manera correcta el Producto'),
+('admin', 'clave', 'DEBE SALIR GALLETAS', 'GALLETAS', '10.1', 'Se guardÃ³ de manera correcta el Producto'),
+('admin', 'clave', 'DEBE SALIR GALLETAS', 'GALLETAS', '11.90', 'Se guardÃ³ de manera correcta el Producto'),
+('admin', 'clave', '', 'GASEOSAS', '20.20', 'Nombre: Error de validaciÃ³n: se necesita un valor.');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
