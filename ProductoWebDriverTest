@@ -1,0 +1,254 @@
+package pe.com.test.seleniumwd;
+
+import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import pe.com.test.seleniumwd.fuenteDatos.Excel;
+import pe.com.test.seleniumwd.fuenteDatos.MySql;
+import pe.com.test.seleniumwd.page.ProductoPage;
+import pe.com.test.seleniumwd.page.IniciarSesionPage;
+
+import pe.com.test.seleniumwd.util.Utilitario;;
+
+public class ProductoWebDriverTest {
+
+	private String urlInicial = "http://localhost:8082/VisorWeb/";
+	private ProductoPage productoPage;
+	private IniciarSesionPage iniciarSesionPage;
+	
+	private String rutaCarpetaError = "C:\\CapturasPantallas\\Producto";
+
+	@BeforeTest
+	@Parameters({ "navegador", "remoto" })
+	public void inicioClase(String navegador, int remoto) throws Exception {
+		this.iniciarSesionPage = new IniciarSesionPage(navegador, this.urlInicial, remoto == 1);
+		this.productoPage = new ProductoPage(this.iniciarSesionPage.getWebDriver());
+	}
+
+	@DataProvider(name = "datosEntrada")
+	public static Object[][] datosPoblados(ITestContext context) {
+		
+		Object[][] datos = null;//de aca comienzo
+		//TODO
+		String fuenteDatos = context.getCurrentXmlTest().getParameter("fuenteDatos");
+		
+		System.out.println("Fuente de datos : " + fuenteDatos);
+		
+		switch (fuenteDatos){
+		case "BD":
+			datos = MySql.leerProductoMysql();
+			break;
+		//case "Excel":
+			//String rutaArchivo = context.getCurrentXmlTest().getParameter("rutaArchivo");
+			//datos = Excel.leerExcel(rutaArchivo);
+		}
+		return datos;
+	}
+	
+	@DataProvider(name = "datosEntrada2")
+	public static Object[][] datosPoblados2(ITestContext context) {
+		
+		Object[][] datos = null;//de aca comienzo
+		//TODO
+		String fuenteDatos = context.getCurrentXmlTest().getParameter("fuenteDatos");
+		
+		System.out.println("Fuente de datos : " + fuenteDatos);
+		
+		switch (fuenteDatos){
+		case "BD":
+			datos = MySql.leerProductoMysql2();
+			break;
+		//case "Excel":
+			//String rutaArchivo = context.getCurrentXmlTest().getParameter("rutaArchivo");
+			//datos = Excel.leerExcel(rutaArchivo);
+		}
+		return datos;
+	}
+
+	@DataProvider(name = "datosEntrada3")
+	public static Object[][] datosPoblados3(ITestContext context) {
+		
+		Object[][] datos = null;//de aca comienzo
+		//TODO
+		String fuenteDatos = context.getCurrentXmlTest().getParameter("fuenteDatos");
+		
+		System.out.println("Fuente de datos : " + fuenteDatos);
+		
+		switch (fuenteDatos){
+		case "BD":
+			datos = MySql.leerProductoMysql3();
+			break;
+		//case "Excel":
+			//String rutaArchivo = context.getCurrentXmlTest().getParameter("rutaArchivo");
+			//datos = Excel.leerExcel(rutaArchivo);
+		}
+		return datos;
+	}
+	@DataProvider(name = "datosEntrada4")
+	public static Object[][] datosPoblados4(ITestContext context) {
+		
+		Object[][] datos = null;//de aca comienzo
+		//TODO
+		String fuenteDatos = context.getCurrentXmlTest().getParameter("fuenteDatos");
+		
+		System.out.println("Fuente de datos : " + fuenteDatos);
+		
+		switch (fuenteDatos){
+		case "BD":
+			datos = MySql.leerProductoMysql4();
+			break;
+		//case "Excel":
+			//String rutaArchivo = context.getCurrentXmlTest().getParameter("rutaArchivo");
+			//datos = Excel.leerExcel(rutaArchivo);
+		}
+		return datos;
+	}
+	
+	@DataProvider(name = "datosEntrada5")
+	public static Object[][] datosPoblados5(ITestContext context) {
+		
+		Object[][] datos = null;//de aca comienzo
+		//TODO
+		String fuenteDatos = context.getCurrentXmlTest().getParameter("fuenteDatos");
+		
+		System.out.println("Fuente de datos : " + fuenteDatos);
+		
+		switch (fuenteDatos){
+		case "BD":
+			datos = MySql.leerProductoMysql5();
+			break;
+		//case "Excel":
+			//String rutaArchivo = context.getCurrentXmlTest().getParameter("rutaArchivo");
+			//datos = Excel.leerExcel(rutaArchivo);
+		}
+		return datos;
+	}
+	
+	@DataProvider(name = "datosEntrada6")
+	public static Object[][] datosPoblados6(ITestContext context) {
+		
+		Object[][] datos = null;//de aca comienzo
+		//TODO
+		String fuenteDatos = context.getCurrentXmlTest().getParameter("fuenteDatos");
+		
+		System.out.println("Fuente de datos : " + fuenteDatos);
+		
+		switch (fuenteDatos){
+		case "BD":
+			datos = MySql.leerProductoMysql6();
+			break;
+		//case "Excel":
+			//String rutaArchivo = context.getCurrentXmlTest().getParameter("rutaArchivo");
+			//datos = Excel.leerExcel(rutaArchivo);
+		}
+		return datos;
+	}
+	
+	
+	@Test(dataProvider = "datosEntrada")
+	public void insertarProducto(String usuario, String clave, String nombre, String categoria, String precio,String valorEsperado) throws Exception {
+		try {
+			iniciarSesionPage.iniciarSesion(usuario, clave);
+			String valorObtenido = productoPage.insertar(nombre.trim(),categoria,precio);
+			Assert.assertEquals(valorObtenido, valorEsperado);
+		} catch(AssertionError e) {
+			Utilitario.caputarPantallarError(rutaCarpetaError,e.getMessage(),productoPage.getWebDriver());
+			//se indica que manualmente tiene que fallar por que ya se esta controlando
+			Assert.fail(e.getMessage()); //o sea ahora si lanzalo como error
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@Test(dataProvider = "datosEntrada2", dependsOnMethods="filtrar2Producto")
+	public void editarProducto(String usuario, String clave, String nombre, String categoria, String precio,String valorEsperado) throws Exception {
+		try {
+			iniciarSesionPage.iniciarSesion(usuario, clave);
+			String valorObtenido = productoPage.editar(nombre.trim(),categoria,precio);
+			Assert.assertEquals(valorObtenido, valorEsperado);
+		} catch(AssertionError e) {
+			Utilitario.caputarPantallarError(rutaCarpetaError,e.getMessage(),productoPage.getWebDriver());
+			//se indica que manualmente tiene que fallar por que ya se esta controlando
+			Assert.fail(e.getMessage()); //o sea ahora si lanzalo como error
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@Test(dataProvider = "datosEntrada3", dependsOnMethods="editarProducto")
+	public void eliminarProducto(String usuario, String clave, String nombre,String valorEsperado) throws Exception {
+		try {
+			iniciarSesionPage.iniciarSesion(usuario, clave);
+			String valorObtenido = productoPage.eliminar(nombre);
+			Assert.assertEquals(valorObtenido, valorEsperado);
+		} catch(AssertionError e) {
+			Utilitario.caputarPantallarError(rutaCarpetaError,e.getMessage(),productoPage.getWebDriver());
+			//se indica que manualmente tiene que fallar por que ya se esta controlando
+			Assert.fail(e.getMessage()); //o sea ahora si lanzalo como error
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@Test(dataProvider = "datosEntrada4", dependsOnMethods="insertarProducto")
+	public void filtrarProducto(String usuario, String clave, String filtro,String valorEsperado) throws Exception {
+		try {
+			iniciarSesionPage.iniciarSesion(usuario, clave);
+			String valorObtenido = productoPage.filtrar1(filtro.trim());
+			Assert.assertEquals(valorObtenido, valorEsperado);
+		} catch(AssertionError e) {
+			Utilitario.caputarPantallarError(rutaCarpetaError,e.getMessage(),productoPage.getWebDriver());
+			//se indica que manualmente tiene que fallar por que ya se esta controlando
+			Assert.fail(e.getMessage()); //o sea ahora si lanzalo como error
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@Test(dataProvider = "datosEntrada5", dependsOnMethods="filtrarProducto")
+	public void filtrar2Producto(String usuario, String clave, String filtro,String valorEsperado) throws Exception {
+		try {
+			iniciarSesionPage.iniciarSesion(usuario, clave);
+			String valorObtenido = productoPage.filtrar2(filtro.trim());
+			Assert.assertEquals(valorObtenido, valorEsperado);
+		} catch(AssertionError e) {
+			Utilitario.caputarPantallarError(rutaCarpetaError,e.getMessage(),productoPage.getWebDriver());
+			//se indica que manualmente tiene que fallar por que ya se esta controlando
+			Assert.fail(e.getMessage()); //o sea ahora si lanzalo como error
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@Test(dataProvider = "datosEntrada6", dependsOnMethods="eliminarProducto")
+	public void eliminar2Producto(String usuario, String clave,String valorEsperado) throws Exception {
+		try {
+			iniciarSesionPage.iniciarSesion(usuario, clave);
+			String valorObtenido = productoPage.eliminar2();
+			Assert.assertEquals(valorObtenido, valorEsperado.trim());
+		} catch(AssertionError e) {
+			Utilitario.caputarPantallarError(rutaCarpetaError,e.getMessage(),productoPage.getWebDriver());
+			//se indica que manualmente tiene que fallar por que ya se esta controlando
+			Assert.fail(e.getMessage()); //o sea ahora si lanzalo como error
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@AfterTest
+	public void tearDown() throws Exception {
+		productoPage.cerrarPagina();
+	}
+
+}
