@@ -1,0 +1,244 @@
+package pe.com.test.seleniumwd.fuenteDatos;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class MySql {
+	private static Connection cn = null;
+	private static PreparedStatement pr = null;
+	private static ResultSet rs = null;
+
+	public static String[][] leerProductoMysql() {
+		String[][]  datos = null;
+		int i = 0;
+		try {
+			//TODO
+			cn = obtenerConexion();
+			pr = cn.prepareStatement("SELECT * FROM producto_ins");			
+			rs = pr.executeQuery();
+			datos = new String[numeroFilas(rs)][6];
+			while (rs.next()){
+				datos[i][0] = rs.getString("usuario");
+				datos[i][1] = rs.getString("clave");
+				datos[i][2] = rs.getString("nombre");
+				datos[i][3] = rs.getString("categoria");
+				datos[i][4] = rs.getString("precio");
+				datos[i][5] = rs.getString("valorEsperado");
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				pr.close();
+			} catch (Exception e) {
+			}
+			try {
+				cn.close();
+			} catch (Exception e) {
+			}
+		}
+		return datos;
+	}
+	
+	public static String[][] leerProductoMysql2() {
+		String[][]  datos = null;
+		int i = 0;
+		try {
+			//TODO
+			cn = obtenerConexion();
+			pr = cn.prepareStatement("Select * FROM producto_edi");
+			rs = pr.executeQuery();
+			datos = new String[numeroFilas(rs)][6];
+			while (rs.next()){
+				datos[i][0] = rs.getString("usuario");
+				datos[i][1] = rs.getString("clave");
+				datos[i][2] = rs.getString("nombre");
+				datos[i][3] = rs.getString("categoria");
+				datos[i][4] = rs.getString("precio");
+				datos[i][5] = rs.getString("valorEsperado");
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				pr.close();
+			} catch (Exception e) {
+			}
+			try {
+				cn.close();
+			} catch (Exception e) {
+			}
+		}
+		return datos;
+	}
+	
+	public static String[][] leerProductoMysql3() {
+		String[][]  datos = null;
+		int i = 0;
+		try {
+			//TODO
+			cn = obtenerConexion();
+			pr = cn.prepareStatement("Select * FROM producto_eli");
+			rs = pr.executeQuery();
+			datos = new String[numeroFilas(rs)][4];
+			while (rs.next()){
+				datos[i][0] = rs.getString("usuario");
+				datos[i][1] = rs.getString("clave");
+				datos[i][2] = rs.getString("nombre");
+				datos[i][3] = rs.getString("valorEsperado");
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				pr.close();
+			} catch (Exception e) {
+			}
+			try {
+				cn.close();
+			} catch (Exception e) {
+			}
+		}
+		return datos;
+	}
+	
+	public static String[][] leerProductoMysql4() {
+		String[][]  datos = null;
+		int i = 0;
+		try {
+			//TODO
+			cn = obtenerConexion();
+			pr = cn.prepareStatement("Select * FROM producto_lis");
+			rs = pr.executeQuery();
+			datos = new String[numeroFilas(rs)][4];
+			while (rs.next()){
+				datos[i][0] = rs.getString("usuario");
+				datos[i][1] = rs.getString("clave");
+				datos[i][2] = rs.getString("nombre");
+				datos[i][3] = rs.getString("valorEsperado");
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				pr.close();
+			} catch (Exception e) {
+			}
+			try {
+				cn.close();
+			} catch (Exception e) {
+			}
+		}
+		return datos;
+	}
+	
+	public static String[][] leerProductoMysql5() {
+		String[][]  datos = null;
+		int i = 0;
+		try {
+			//TODO
+			cn = obtenerConexion();
+			pr = cn.prepareStatement("Select * FROM producto_lis2");
+			rs = pr.executeQuery();
+			datos = new String[numeroFilas(rs)][4];
+			while (rs.next()){
+				datos[i][0] = rs.getString("usuario");
+				datos[i][1] = rs.getString("clave");
+				datos[i][2] = rs.getString("nombre");
+				datos[i][3] = rs.getString("valorEsperado");
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				pr.close();
+			} catch (Exception e) {
+			}
+			try {
+				cn.close();
+			} catch (Exception e) {
+			}
+		}
+		return datos;
+	}
+	
+	public static String[][] leerProductoMysql6() {
+		String[][]  datos = null;
+		int i = 0;
+		try {
+			//TODO
+			cn = obtenerConexion();
+			pr = cn.prepareStatement("Select * FROM producto_eli2");
+			rs = pr.executeQuery();
+			datos = new String[numeroFilas(rs)][3];
+			while (rs.next()){
+				datos[i][0] = rs.getString("usuario");
+				datos[i][1] = rs.getString("clave");
+				datos[i][2] = rs.getString("valorEsperado");
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				pr.close();
+			} catch (Exception e) {
+			}
+			try {
+				cn.close();
+			} catch (Exception e) {
+			}
+		}
+		return datos;
+	}
+	
+	private static Connection obtenerConexion() throws Exception {
+		Class.forName("com.mysql.jdbc.Driver");
+		return (DriverManager.getConnection("jdbc:mysql://localhost:3306/visortestbd", "root", ""));
+	}
+	
+	private static int numeroFilas(ResultSet resultSet){
+	    int totalFilas = 0;
+	    try {
+	        resultSet.last();
+	        totalFilas = resultSet.getRow();
+	        resultSet.beforeFirst();
+	    } 
+	    catch(Exception ex)  {
+	        return 0;
+	    }
+	    return totalFilas ;    
+	}
+	
+}
