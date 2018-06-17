@@ -1,0 +1,151 @@
+package pe.com.test.seleniumwd.page;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
+
+import pe.com.test.seleniumwd.driver.VisorDriver;
+
+public class ProductoPage {
+
+	private By linkMenu = By.xpath("/html/body/section/div[1]/div");
+	private By linkModAlmacen = By.xpath("/html/body/section/div[1]/nav/ul/li/span");
+	private By linkMntProducto = By.linkText("Mnt. de Producto");
+	private By botonNuevo = By.id("btnNuevo");
+	private By botonActualizar = By.id("btnActualizar");
+	private By botonEliminar = By.id("btnEliminar");
+	private By botonFiltrar = By.id("btnFiltrar");
+	private By textoFiltro = By.id("txtFiltro");
+	private By cajaNombre = By.id("txtNombre");
+	private By cajaCategoria = By.id("cboCategoria");
+	//private By tablaProductos1 = By.id("tablaProductos_data");
+	private By tablaProductos = By.xpath("//*[@id='tablaProductos_data']/tr[1]/td[2]");
+	private By tablaVacia = By.xpath("//*[@id='tablaProductos_data']/tr/td");
+	private By cajaPrecio = By.id("txtPrecio");
+	private By botonGuardar = By.id("btnGuardar");
+	private By botonSi = By.id("btnSi");
+	private By botonNo = By.id("btnNo");
+	private By mensajeRespuesta = By.id("messages");
+	private WebDriver webDriver = null;
+	//private Select select = null;
+	private WebDriverWait webDriverWait= null;
+	
+	public ProductoPage(WebDriver webDriver) {
+		this.webDriver = webDriver;
+		this.webDriverWait =new WebDriverWait(this.webDriver, 100, 500);//espera explicita consume menos memoria
+	}
+
+	
+	 
+	public String insertar(String nombre, String categoria, String precio) throws Exception {
+		//TODO
+		
+		this.webDriver.get("http://localhost:8082/VisorWeb/mntAdmProducto.xhtml");
+		this.webDriver.findElement(botonNuevo).click();
+		this.webDriver.findElement(cajaNombre).clear();
+		this.webDriver.findElement(cajaNombre).sendKeys(nombre);
+		Select cat = new Select(this.webDriver.findElement(cajaCategoria));
+		cat.selectByVisibleText(categoria); //para tipo string, si fuera numero poner selectbyindex
+		//this.webDriver.findElement(cajaCategoria).sendKeys(categoria);
+		//this.webDriver.findElement(cajaCategoria).sendKeys(Integer.toString(categoria));
+		//this.webDriver.findElement(cajaPrecio).sendKeys(String.valueOf(precio));
+		this.webDriver.findElement(cajaPrecio).sendKeys(precio);
+		this.webDriver.findElement(botonGuardar).click();	
+		
+		//puede reemplazar a cada findEelement mensajeRespuesta
+		return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(mensajeRespuesta)).getText();//encontrar el elemento en el tiempo de respuesta definido
+		//return webDriver.findElement(mensajeRespuesta).getText();
+		
+	}
+	
+	public String filtrar1(String filtro) throws Exception {
+		
+		this.webDriver.get("http://localhost:8082/VisorWeb/mntAdmProducto.xhtml");
+		
+		this.webDriver.findElement(textoFiltro).sendKeys(filtro);
+		this.webDriver.findElement(botonFiltrar).click();
+		
+		
+		//dreturn webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(tablaProductos)).getText();//encontrar el elemento en el tiempo de respuesta definido
+		return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(tablaProductos)).getText();				
+	}
+	
+		public String filtrar2(String filtro) throws Exception {
+		
+		this.webDriver.get("http://localhost:8082/VisorWeb/mntAdmProducto.xhtml");
+		
+		this.webDriver.findElement(textoFiltro).sendKeys(filtro);
+		this.webDriver.findElement(botonFiltrar).click();
+		
+		
+		//dreturn webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(tablaProductos)).getText();//encontrar el elemento en el tiempo de respuesta definido
+		return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(tablaVacia)).getText();				
+	}
+	
+	public String editar(String nombre, String categoria, String precio) throws Exception {
+		//TODO
+		
+		this.webDriver.get("http://localhost:8082/VisorWeb/mntAdmProducto.xhtml");
+		
+		this.webDriver.findElement(textoFiltro).sendKeys("DEBE SALIR GALLETAS");
+		this.webDriver.findElement(botonFiltrar).click();
+		this.webDriver.findElement(tablaProductos).click();
+		this.webDriver.findElement(botonActualizar).click();
+		this.webDriver.findElement(cajaNombre).clear();
+		this.webDriver.findElement(cajaNombre).sendKeys(nombre);
+		Select cat = new Select(this.webDriver.findElement(cajaCategoria));
+		cat.selectByVisibleText(categoria); //para tipo string, si fuera numero poner selectbyindex
+		this.webDriver.findElement(cajaPrecio).clear();
+		this.webDriver.findElement(cajaPrecio).sendKeys(String.valueOf(precio));
+		//this.webDriver.findElement(cajaPrecio).sendKeys(precio);
+		this.webDriver.findElement(botonGuardar).click();	
+		
+		//puede reemplazar a cada findEelement mensajeRespuesta
+		return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(mensajeRespuesta)).getText();//encontrar el elemento en el tiempo de respuesta definido
+		//return webDriver.findElement(mensajeRespuesta).getText();
+		
+	}
+	
+	public String eliminar(String nombre) throws Exception {
+		//TODO
+		
+		this.webDriver.get("http://localhost:8082/VisorWeb/mntAdmProducto.xhtml");
+		
+		this.webDriver.findElement(textoFiltro).sendKeys(nombre);
+		this.webDriver.findElement(botonFiltrar).click();
+		this.webDriver.findElement(tablaProductos).click();
+		this.webDriver.findElement(botonEliminar).click();
+		this.webDriver.findElement(botonSi).click();
+		
+		//puede reemplazar a cada findEelement mensajeRespuesta
+		return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(mensajeRespuesta)).getText();//encontrar el elemento en el tiempo de respuesta definido
+		//return webDriver.findElement(mensajeRespuesta).getText();
+	}
+	
+	public String eliminar2() throws Exception {
+		//TODO
+		
+		this.webDriver.get("http://localhost:8082/VisorWeb/mntAdmProducto.xhtml");
+		
+		//this.webDriver.findElement(botonFiltrar).click();
+		//this.webDriver.findElement(tablaProductos).click();
+		this.webDriver.findElement(botonEliminar).click();
+		this.webDriver.findElement(botonSi).click();
+		
+		//puede reemplazar a cada findEelement mensajeRespuesta
+		return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(mensajeRespuesta)).getText();//encontrar el elemento en el tiempo de respuesta definido
+		//return webDriver.findElement(mensajeRespuesta).getText();
+	}
+	
+	
+	public void cerrarPagina(){
+		VisorDriver.cerrarPagina(webDriver);
+	}
+	
+	public WebDriver getWebDriver() {
+		return webDriver;
+	}
+
+}
